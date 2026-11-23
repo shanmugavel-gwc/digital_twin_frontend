@@ -1,0 +1,20 @@
+/* Settings, User management, Audit logs. Tokens only (theme.css). */
+.adm-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; }
+.adm-form .field input, .adm-form .field select { width: 100%; }
+.adm-sub { margin: 14px 0 6px; font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+.adm-sum { font-size: 12px; font-weight: 700; }
+.adm-sum.ok { color: var(--st-normal); }
+.adm-sum.bad { color: var(--st-critical); }
+.adm-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+.adm-msg { font-size: 13px; }
+.adm-msg.ok { color: var(--st-normal); }
+.adm-msg.err { color: var(--st-critical); }
+.adm-check { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.adm-chan { display: flex; gap: 10px; flex-wrap: wrap; }
+.adm-filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 12px; }
+.adm-filters .field { min-width: 160px; }
+.adm-json { margin: 6px 0 0; padding: 8px 10px; border-radius: 8px; background: var(--kg-bg-3); font-size: 12px; white-space: pre-wrap; word-break: break-word; max-height: 260px; overflow: auto; }
+.adm-row-btn { background: none; border: 0; color: var(--brand-purple); cursor: pointer; font: inherit; padding: 0; }
+.adm-actor { font-weight: 600; }
+.adm-you { font-size: 11px; color: var(--brand-purple); font-weight: 700; margin-left: 6px; }
+table.data td.adm-wrap { max-width: 420px; white-space: normal; word-break: break-word; }

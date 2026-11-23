@@ -1,0 +1,18 @@
+import { chromium } from "playwright";
+const BASE = process.env.UI_URL, OUT = process.env.OUT;
+const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+const errs = []; p.on("pageerror", (e) => errs.push(e.message));
+await p.goto(`${BASE}/#twin`); await p.waitForSelector(".f3d-canvas canvas", { timeout: 30000 });
+await p.selectOption("select >> nth=0", "SMT-L1"); await p.waitForTimeout(5000);
+const w = async () => p.$eval(".side", (e) => Math.round(e.getBoundingClientRect().width));
+console.log("open width:", await w(), "expanded:", await p.getAttribute(".side-toggle", "aria-expanded"));
+await p.screenshot({ path: `${OUT}/side-open.png` });
+await p.click(".side-toggle"); await p.waitForTimeout(1500);
+console.log("closed width:", await w(), "expanded:", await p.getAttribute(".side-toggle", "aria-expanded"), "canvas w:", await p.$eval(".f3d-canvas canvas", (e) => e.getBoundingClientRect().width));
+await p.screenshot({ path: `${OUT}/side-closed.png` });
+await p.reload(); await p.waitForTimeout(1500);
+console.log("after reload width (should stay closed):", await w());
+await p.click(".side-toggle"); await p.waitForTimeout(800);
+console.log("reopened width:", await w(), "errors:", errs.length ? errs : "none");
+await b.close();

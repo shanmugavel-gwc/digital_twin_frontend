@@ -1,0 +1,54 @@
+/* 3D factory: machine tags, status panel, machine information drawer. Tokens only (theme.css). */
+.fh-stage { height: 800px; }
+.f3d-status { top: 236px; left: 14px; width: 230px; max-height: 300px; overflow: auto; }
+.f3d-stlegend { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 4px; }
+.f3d-stlegend li { display: flex; justify-content: space-between; align-items: center; }
+.f3d-mlist { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 2px; }
+.f3d-mlist button { width: 100%; display: flex; align-items: center; gap: 6px; background: none; border: 0; color: inherit; font: inherit; font-size: 12px; padding: 2px 4px; border-radius: 6px; cursor: pointer; text-align: left; }
+.f3d-mlist button:hover, .f3d-mlist button.on { background: rgba(var(--paper-rgb), .14); }
+.f3d-mlist .muted-text { color: var(--sky); margin-left: auto; }
+.f3d-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--st-offline); flex: none; }
+.f3d-dot.mt-normal { background: var(--st-normal); } .f3d-dot.mt-warning { background: var(--st-warning); } .f3d-dot.mt-attention { background: var(--st-attention); }
+.f3d-dot.mt-critical { background: var(--st-critical); } .f3d-dot.mt-offline { background: var(--st-offline); }
+
+.f3d-mtag { font-size: 11px; font-weight: 700; white-space: nowrap; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--dr-border);
+  background: var(--node-glass); color: var(--text-primary); }
+.f3d-mtag.mt-normal { border-color: var(--st-normal); } .f3d-mtag.mt-warning { border-color: var(--st-warning); background: var(--st-warning-soft); }
+.f3d-mtag.mt-attention { border-color: var(--st-attention); background: var(--st-attention-soft); }
+.f3d-mtag.mt-critical { border-color: var(--st-critical); background: var(--st-critical-soft); }
+.f3d-mtag.mt-offline { border-color: var(--st-offline); background: var(--st-offline-soft); }
+.f3d-mtag.on { box-shadow: 0 0 0 2px var(--brand-purple); }
+.f3d-sub { font-size: 10px; font-weight: 700; white-space: nowrap; color: var(--brand-purple); background: var(--node-glass); padding: 1px 6px; border-radius: 5px; letter-spacing: .02em; }
+.f3d-small { font-size: 11px; font-weight: 600; }
+
+/* machine information drawer (light card over the stage) */
+.has-mpanel .fh-tr, .has-mpanel .fh-ctx, .has-mpanel .fh-br, .has-mpanel .fh-tiles { display: none; }
+.f3d-mpanel { position: absolute; z-index: 4; top: 12px; right: 12px; bottom: 12px; width: 400px; overflow: auto; background: var(--surface-hi); color: var(--text-primary);
+  border: 1px solid var(--dr-border); border-radius: 14px; padding: 14px 16px; box-shadow: 0 10px 30px rgba(var(--shadow-rgb), .25); font-size: 13px; }
+.f3d-mpanel h4 { margin: 14px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary); display: flex; gap: 8px; align-items: center; }
+.mp-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+.mp-id { font-size: 20px; font-weight: 800; }
+.mp-name { color: var(--text-secondary); }
+.mp-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+.mp-state, .mp-risk { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--muted-fill); color: var(--text-secondary); }
+.mp-kv { display: grid; grid-template-columns: max-content 1fr; gap: 3px 12px; margin: 10px 0 0; }
+.mp-kv dt { color: var(--text-secondary); }
+.mp-kv dd { margin: 0; }
+.mp-asof { margin: -2px 0 6px; font-size: 11px; }
+.mp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.mp-grid div { border: 1px solid var(--dr-border); border-radius: 8px; padding: 6px 8px; display: grid; }
+.mp-grid span { font-size: 10px; color: var(--text-secondary); }
+.mp-grid b { font-size: 14px; }
+.mp-small { font-size: 12px; margin: 4px 0; }
+.mp-chart { height: 190px; }
+.mp-finding, .mp-rec { border-left: 3px solid var(--brand-purple); padding: 4px 0 4px 10px; margin-bottom: 8px; }
+.mp-finding p, .mp-rec p { margin: 4px 0; }
+.mp-finding ul { margin: 4px 0; padding-left: 18px; font-size: 12px; }
+@media (max-width: 1100px) { .fh-stage { height: 620px; } .f3d-mpanel { width: calc(100% - 24px); top: auto; height: 60%; } .f3d-status { display: none; } }
+/* 3D labels keep a constant on-screen size (no distance scaling): keep them small */
+.fh-stage .f3d-callout { font-size: 11px; padding: 2px 8px; }
+.fh-stage .f3d-tag { font-size: 10px; padding: 1px 5px; }
+.fh-stage .f3d-mtag { font-size: 10px; }
+.fh-stage .f3d-sub { font-size: 9px; }
+.fh-stage .f3d-sign { font-size: 13px; }
+.fh-panel.f3d-status, .fh-panel.f3d-status h3, .f3d-status .f3d-mlist button { color: var(--on-accent); }

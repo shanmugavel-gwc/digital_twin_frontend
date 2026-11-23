@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const BASE = process.env.UI_URL || "http://localhost:5174";
+const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+const errs = []; p.on("pageerror", (e) => errs.push(e.message)); p.on("console", (m) => m.type() === "error" && errs.push(m.text()));
+await p.goto(`${BASE}/#twin`);
+await p.waitForSelector(".f3d-canvas canvas", { timeout: 30000 });
+await p.selectOption("select >> nth=0", "SMT-L1"); await p.waitForTimeout(6000);
+await p.screenshot({ path: process.env.OUT + "/f3d-overview.png" });
+await p.selectOption("select >> nth=0", "FAL-L1"); await p.waitForTimeout(6000); await p.screenshot({ path: process.env.OUT + "/f3d-fal.png" }); await p.selectOption("select >> nth=0", "SMT-L1"); await p.waitForTimeout(4000); await p.selectOption(".detail select", { index: 4 }); await p.waitForTimeout(2500);
+console.log("detail:", (await p.$eval(".detail", (e) => e.textContent)).slice(0, 250));
+await p.screenshot({ path: process.env.OUT + "/f3d-focus.png" });
+console.log("errors:", errs.length ? errs : "none"); await b.close();

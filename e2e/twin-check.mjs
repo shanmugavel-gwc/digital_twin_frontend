@@ -1,0 +1,43 @@
+// Twin view (3D animated simulation) check on the real stack. Usage: OUT=<dir> UI_URL=<url> node e2e/twin-check.mjs
+import { chromium } from "playwright";
+const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 1000 } });
+const errs = [];
+p.on("pageerror", (e) => errs.push(e.message));
+p.on("console", (m) => m.type() === "error" && errs.push(m.text()));
+const OUT = process.env.OUT;
+await p.goto(`${process.env.UI_URL}/#floor3d`);               // the old link must land on the Twin view
+await p.waitForSelector(".f3d-canvas canvas", { timeout: 40000 });
+console.log("page title:", await p.$eval(".top-title", (e) => e.textContent), "| 3D shop floor nav entries:", (await p.$$("a.conv:has-text('3D shop floor')")).length);
+await p.selectOption("select >> nth=0", "SMT-L1");
+await p.waitForSelector(".detail dd:has-text('units')", { timeout: 90000 });      // forecast series loaded
+await p.waitForTimeout(1500);
+const hourChip = async () => (await p.$$eval(".f3d-chip", (e) => e.map((x) => x.textContent).find((t) => t.startsWith("Hour")))) ?? "none";
+await p.click("button:has-text('4×')");
+const h1 = await hourChip();
+await p.waitForTimeout(4500);
+const h2 = await hourChip();
+console.log("clock while playing at 4x:", h1, "->", h2);
+await p.screenshot({ path: `${OUT}/twin-play.png` });
+await p.click("button:has-text('Pause')");
+const h3 = await hourChip();
+await p.waitForTimeout(2500);
+const h4 = await hourChip();
+console.log("clock while paused:", h3, "->", h4, h3 === h4 ? "(stopped)" : "(STILL MOVING)");
+await p.fill("input[type=range]", "12");
+await p.waitForTimeout(500);
+console.log("scrub to 12:", await hourChip());
+await p.selectOption(".f3d-toolbar select >> nth=1", "SMT machine outage");
+await p.click("button.primary:has-text('Run on this line')");
+await p.waitForSelector("p.note:has-text('SIMULATED preview')", { timeout: 120000 });
+await p.waitForTimeout(1500);
+console.log("preview:", (await p.$eval("p.note:has-text('SIMULATED preview')", (e) => e.textContent)).slice(-60), "| clock:", await hourChip());
+await p.click("button:has-text('Play')");
+await p.waitForTimeout(1500);
+await p.screenshot({ path: `${OUT}/twin-preview.png` });
+await p.click("button:has-text('LIVE')");
+await p.waitForTimeout(2500);
+console.log("LIVE: hour chip present:", (await hourChip()) !== "none", "| play button disabled:", await p.$eval(".f3d-toolbar button.primary:not(:has-text('Run'))", (e) => e.disabled));
+await p.screenshot({ path: `${OUT}/twin-live.png` });
+console.log("errors:", errs.length ? errs : "none");
+await b.close();

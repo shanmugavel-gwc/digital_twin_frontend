@@ -1,0 +1,80 @@
+:root {
+  --brand-purple:#6f3dba; --brand-blue:#4d8eeb; --brand-orange:#f58a3a; --brand-navy:#1f2f59;
+  --brand-white:#ffffff; --brand-bg:#fcfcfe; --brand-blue-soft:#eaf4ff; --brand-purple-soft:#f3eeff;
+  --brand-peach-soft:#fff2eb; --sky:#7fb0f2; --cyan:#31b7c3;
+
+  --text-primary:#1f2f59; --text-secondary:#54627e; --text-muted:#98a2b3;
+  --on-accent:#ffffff; --muted-ink:#64748b;
+
+  --page-bg:#f5f7fa; --surface-rgb:255,255,255; --surface-hi:#ffffff; --white:#ffffff;
+  --kg-bg-2:#f8fafd; --kg-bg-3:#f3f6fb; --light:#f4f7fc; --muted-fill:#eef1f6;
+  --node-glass:rgba(255,255,255,.94); --shadow-rgb:31,47,89; --line-rgb:31,47,89; --paper-rgb:252,252,254;
+
+  --depth-0:#e45c72; --depth-1:#6f3dba; --depth-2:#4d8eeb; --depth-3:#f58a3a;
+  --depth-4:#31b7c3; --depth-5:#b88943; --depth-6:#8a63d2; --depth-7:#3e7bc4;
+
+  --bx-wash-1:#e2eeff; --bx-wash-2:#ece3ff; --bx-wash-3:#ffe9d9;
+  --bx-wash-4:#ffe1ec; --bx-wash-5:#e4d7ff; --bx-wash-6:#d8e8ff;
+  --ghost-ink:rgba(103,104,106,.14); --signal-flash:#ffffff;
+
+  --chart-c1:#4D8EEB; --chart-c2:#D9701F; --chart-c3:#6F3DBA; --chart-c4:#0E9C86;
+  --chart-o1:#8FB8F2; --chart-o2:#5F97E4; --chart-o3:#3670BB; --chart-o4:#17477F;
+  --chart-axis:#7c839b; --chart-label:#2c2c2c; --chart-surface:#ffffff;
+
+  --dr-bg:#f7f7fc; --dr-surface:#ffffff; --dr-card:rgba(255,255,255,.72); --dr-ink:#172554;
+  --dr-ink-2:#64748b; --dr-ink-3:#8b95ad; --dr-purple:#6d3ccb; --dr-purple-soft:#a78bfa;
+  --dr-blue:#4f8ef7; --dr-border:#e2e4f0; --dr-active:#f1edff; --dr-hover:#f5f2ff;
+  /* machine / finding status (spec: green normal, yellow warning, orange attention, red critical, grey offline) */
+  --st-normal:#1f9d55; --st-warning:#d4a106; --st-attention:#e8730c; --st-critical:#d92d20; --st-offline:#8a94a6;
+  --st-normal-soft:#e6f6ec; --st-warning-soft:#fdf6dc; --st-attention-soft:#fdeedf; --st-critical-soft:#fde7e5; --st-offline-soft:#eef0f4;
+  /* 3D campus scene (daylight palette) */
+  --scene-sky:#d6e6f7; --scene-night:#0d1830; --scene-grass:#86b36a; --scene-grass-2:#6a9c50; --scene-asphalt:#4b5262; --scene-marking:#f2c94c;
+  --scene-concrete:#d9dde4; --scene-wall:#f5f7fa; --scene-wall-2:#e2e7ee; --scene-glass:#3e6fa6; --scene-roof:#c7cdd6;
+  --scene-solar:#1f3b6e; --scene-steel:#98a4b5; --scene-tank:#e7ebf0; --scene-tree:#3f7d3a; --scene-trunk:#7a5a3a; --scene-lit:#ffe9a8;
+  /* Home pipeline stage headers */
+  --stage-1:#8f1d2c; --stage-2:#1f5fd6; --stage-3:#5a2aa8; --stage-4:#1e3f91; --stage-5:#a3212d; --stage-ink:#ffffff;
+}
+
+:root[data-theme="dark"] {
+  --brand-purple:#a684ee; --brand-blue:#78acf5; --brand-orange:#ffab63; --brand-navy:#e7edfa;
+  --brand-white:#e9eefa; --brand-bg:#0b1220; --brand-blue-soft:#142339; --brand-purple-soft:#1e1836;
+  --brand-peach-soft:#2b1d17; --sky:#9cc4f8; --cyan:#4fd3de;
+
+  --text-primary:#f1f5fd; --text-secondary:#b3c0d8; --text-muted:#7d8ba6;
+  --on-accent:#0a1020; --muted-ink:#8494ae;
+
+  --page-bg:#090e1a; --surface-rgb:25,34,53; --surface-hi:#26334d; --white:#1b2540;
+  --kg-bg-2:#111a2b; --kg-bg-3:#162034; --light:#162034; --muted-fill:#151e30;
+  --node-glass:rgba(30,41,64,.94); --shadow-rgb:0,0,0; --line-rgb:214,224,244; --paper-rgb:9,14,26;
+
+  --depth-0:#ff7d90; --depth-1:#a684ee; --depth-2:#78acf5; --depth-3:#ffab63;
+  --depth-4:#4fd3de; --depth-5:#ddab5f; --depth-6:#b192ec; --depth-7:#6ba2e0;
+
+  --bx-wash-1:#13233d; --bx-wash-2:#1b1938; --bx-wash-3:#2c2019;
+  --bx-wash-4:#2a1a28; --bx-wash-5:#1d1a3c; --bx-wash-6:#101f36;
+  --ghost-ink:rgba(190,205,235,.10); --signal-flash:#dce8ff;
+
+  --chart-c1:#6BA5F5; --chart-c2:#F0913E; --chart-c3:#A684EE; --chart-c4:#2BC0A6;
+  --chart-o1:#2E5C98; --chart-o2:#4A7EC2; --chart-o3:#71A3E4; --chart-o4:#A6CAFA;
+  --chart-axis:#8d97ae; --chart-label:#dfe6f4; --chart-surface:#192235;
+
+  --dr-bg:#10121b; --dr-surface:#171a27; --dr-card:rgba(23,26,39,.82); --dr-ink:#f1f5ff;
+  --dr-ink-2:#98a2b8; --dr-ink-3:#78829a; --dr-purple:#9b7cf6; --dr-purple-soft:#b9a4fb;
+  --dr-blue:#4f8ef7; --dr-border:#292d40; --dr-active:#211b38; --dr-hover:#1b1f30;
+  --st-normal:#3ccf7a; --st-warning:#f2c94c; --st-attention:#ff9a3d; --st-critical:#ff6b5e; --st-offline:#7d889c;
+  --st-normal-soft:#12301f; --st-warning-soft:#33290b; --st-attention-soft:#3a230e; --st-critical-soft:#3d1715; --st-offline-soft:#1d2433;
+  /* 3D campus scene (night palette) */
+  --scene-sky:#0b1424; --scene-night:#070d1a; --scene-grass:#1f3a2a; --scene-grass-2:#18301f; --scene-asphalt:#2a2f3a; --scene-marking:#c9a43c;
+  --scene-concrete:#3a4150; --scene-wall:#a3adbd; --scene-wall-2:#818ca0; --scene-glass:#2a4f80; --scene-roof:#5b6475;
+  --scene-solar:#142a4f; --scene-steel:#6f7b8d; --scene-tank:#aab4c2; --scene-tree:#24502a; --scene-trunk:#4a3826; --scene-lit:#ffd770;
+  /* Home pipeline stage headers */
+  --stage-1:#b8394b; --stage-2:#3d7be0; --stage-3:#7a4fcf; --stage-4:#3a5fb8; --stage-5:#c9424e; --stage-ink:#ffffff;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Montserrat", system-ui, sans-serif;
+  background: var(--page-bg);
+  color: var(--text-primary);
+}

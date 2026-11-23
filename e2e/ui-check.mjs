@@ -1,0 +1,23 @@
+// Visual + functional check of the shell, the Overview and the 3D page (scenario preview). Usage: OUT=<dir> UI_URL=<url> node e2e/ui-check.mjs
+import { chromium } from "playwright";
+const BASE = process.env.UI_URL || "http://localhost:5173";
+const OUT = process.env.OUT || ".";
+const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+const errs = []; p.on("pageerror", (e) => errs.push(e.message)); p.on("console", (m) => m.type() === "error" && errs.push(m.text()));
+await p.goto(`${BASE}/#overview`);
+await p.waitForSelector(".tile", { timeout: 60000 }); await p.waitForTimeout(1200);
+const hdr = await p.$eval(".page-header", (e) => ({ h: e.getBoundingClientRect().height, sh: e.scrollHeight }));
+console.log("header height/scrollHeight:", hdr.h, hdr.sh, hdr.h >= hdr.sh - 1 ? "OK (not clipped)" : "CLIPPED");
+console.log("KPI tiles:", await p.$$eval(".tile", (e) => e.map((x) => x.querySelector(".tile-label").textContent + "=" + x.querySelector(".tile-value").textContent)));
+await p.screenshot({ path: `${OUT}/ui-overview.png` });
+await p.goto(`${BASE}/#twin`);
+await p.waitForSelector(".f3d-canvas canvas", { timeout: 30000 });
+await p.selectOption("select >> nth=0", "SMT-L1"); await p.waitForTimeout(3000);
+await p.selectOption("select >> nth=1", "SMT machine outage");
+await p.click("button.primary:has-text('Run on this line')");
+await p.waitForSelector("p.note:has-text('SIMULATED preview')", { timeout: 120000 }); await p.waitForTimeout(3000);
+console.log("preview note:", (await p.$eval("p.note:has-text('SIMULATED preview')", (e) => e.textContent)).slice(0, 220));
+await p.screenshot({ path: `${OUT}/ui-3d.png` });
+console.log("errors:", errs.length ? errs : "none");
+await b.close();

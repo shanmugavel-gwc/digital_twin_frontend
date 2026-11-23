@@ -1,0 +1,62 @@
+/* Shared styles for the platform shell and pages. Colours only via tokens from theme.css. */
+.st-badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.st-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.st-normal { color: var(--st-normal); background: var(--st-normal-soft); }
+.st-warning { color: var(--st-warning); background: var(--st-warning-soft); }
+.st-attention { color: var(--st-attention); background: var(--st-attention-soft); }
+.st-critical { color: var(--st-critical); background: var(--st-critical-soft); }
+.st-offline { color: var(--st-offline); background: var(--st-offline-soft); }
+.vl { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 1px 6px; border-radius: 4px; border: 1px solid currentColor; }
+.vl-actual { color: var(--brand-blue); } .vl-calculated { color: var(--cyan); } .vl-predicted { color: var(--brand-purple); } .vl-simulated { color: var(--brand-orange); }
+
+/* sidebar follows app.css (theme section 9.9): --dr-bg panel, --dr-ink-2 items, --dr-active / --dr-purple for the active page */
+.nav-group { margin-top: 14px; padding: 0 12px 4px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.app.collapsed .nav-group { visibility: hidden; height: 6px; padding: 0; }
+.top-right { display: flex; align-items: center; gap: 10px; }
+.user-switch { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.user-switch select { font: inherit; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--dr-border); background: var(--surface-hi); color: var(--text-primary); }
+.role-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: var(--brand-purple-soft); color: var(--brand-purple); }
+.page-grid { display: grid; gap: 16px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+.kpi { text-align: left; border: 1px solid var(--dr-border); background: var(--surface-hi); border-radius: 12px; padding: 12px 14px; cursor: pointer; font: inherit; color: inherit; }
+.kpi:hover { border-color: var(--brand-purple); }
+.kpi .k-label { font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between; gap: 6px; align-items: center; }
+.kpi .k-value { font-size: 24px; font-weight: 700; margin-top: 4px; }
+.kpi .k-hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; }
+.primary { background: var(--brand-purple); color: var(--on-accent); border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+.primary:disabled { opacity: .5; cursor: not-allowed; }
+.notice { border-left: 4px solid var(--brand-purple); background: var(--brand-purple-soft); padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+.notice.warn { border-color: var(--st-warning); background: var(--st-warning-soft); }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------- shared loader (components.jsx Loader) */
+.ld { display: grid; gap: 14px; color: var(--text-primary); }
+.ld-block { padding: 18px 20px; background: var(--surface-hi); border: 1px solid var(--dr-border); border-radius: 16px; box-shadow: 0 2px 10px rgba(var(--shadow-rgb), .05); }
+.ld-card { padding: 4px 0; }
+.ld-overlay { position: absolute; inset: 0; z-index: 5; place-content: center; justify-items: center; background: rgba(var(--paper-rgb), .55); backdrop-filter: blur(2px); }
+.ld-overlay .ld-head { padding: 14px 18px; border-radius: 14px; background: var(--surface-hi); border: 1px solid var(--dr-border); box-shadow: 0 10px 30px rgba(var(--shadow-rgb), .18); }
+.ld-head { display: flex; align-items: center; gap: 14px; }
+.ld-text { display: grid; gap: 2px; min-width: 0; }
+.ld-text b { font-size: 14px; font-weight: 700; }
+.ld-text small { font-size: 12px; color: var(--text-secondary); }
+.ld-ring { position: relative; width: 38px; height: 38px; flex: none; border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--brand-purple), var(--brand-blue), var(--brand-orange), transparent 75%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), var(--brand-white) calc(100% - 4px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 5px), var(--brand-white) calc(100% - 4px));
+  animation: ld-spin .9s linear infinite; }
+.ld-ring i { position: absolute; top: 0; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--brand-orange); }
+.ld-ring-sm { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; margin-right: 6px;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), var(--brand-white) calc(100% - 2px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 3px), var(--brand-white) calc(100% - 2px)); }
+.ld-inline { display: inline-flex; align-items: center; font-size: 12px; color: var(--text-secondary); }
+.ld-dots i { font-style: normal; animation: ld-blink 1.2s infinite both; }
+.ld-dots i:nth-child(2) { animation-delay: .2s; } .ld-dots i:nth-child(3) { animation-delay: .4s; }
+.ld-skel { display: grid; gap: 10px; }
+.ld-skel span { display: block; height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--muted-fill) 0%, var(--kg-bg-3) 40%, var(--brand-purple-soft) 50%, var(--kg-bg-3) 60%, var(--muted-fill) 100%);
+  background-size: 300% 100%; animation: ld-shimmer 1.4s ease-in-out infinite; }
+@keyframes ld-spin { to { transform: rotate(360deg); } }
+@keyframes ld-blink { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+@keyframes ld-shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .ld-ring, .ld-dots i, .ld-skel span { animation: none; } }

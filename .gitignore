@@ -1,0 +1,13 @@
+.env
+*.env.local
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+node_modules/
+ui/dist/
+screenshots/
+
+# local server logs
+*.log
+data/exports/

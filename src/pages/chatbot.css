@@ -1,0 +1,48 @@
+/* AI Manufacturing Chatbot. Tokens only (theme.css). */
+.cb-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; min-height: calc(100vh - 190px); }
+.cb-side { min-width: 0; border: 1px solid var(--dr-border); background: var(--surface-hi); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; max-height: calc(100vh - 190px); overflow: auto; }
+.cb-side h4 { margin: 8px 0 0; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-secondary); }
+.cb-side ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.cb-conv { width: 100%; text-align: left; border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 6px 8px; font: inherit; color: var(--text-primary); cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+.cb-conv span { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-conv small { font-size: 11px; color: var(--text-muted); }
+.cb-conv:hover { background: var(--kg-bg-3); }
+.cb-conv.active { background: var(--brand-purple-soft); border-color: var(--brand-purple); }
+.cb-main { min-width: 0; border: 1px solid var(--dr-border); background: var(--surface-hi); border-radius: 12px; display: flex; flex-direction: column; max-height: calc(100vh - 190px); }
+.cb-thread { flex: 1; overflow: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.cb-empty p { color: var(--text-secondary); max-width: 760px; }
+.cb-msg { display: flex; }
+.cb-user { justify-content: flex-end; }
+.cb-user .cb-bubble { background: var(--brand-purple); color: var(--on-accent); max-width: 70%; white-space: pre-wrap; }
+.cb-bubble { background: var(--kg-bg-2); border: 1px solid var(--dr-border); border-radius: 12px; padding: 10px 14px; max-width: 100%; min-width: 0; }
+.cb-bot .cb-bubble { width: 100%; }
+.cb-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+.cb-text p { margin: 4px 0; line-height: 1.5; }
+.cb-text ul, .cb-text ol { margin: 4px 0; padding-left: 22px; line-height: 1.5; }
+.cb-text h4 { margin: 8px 0 4px; font-size: 14px; }
+.cb-gap { height: 6px; }
+.cb-foot { font-size: 11px; color: var(--text-muted); border-top: 1px dashed var(--dr-border); padding-top: 6px; margin-top: 8px !important; }
+.cb-mref { border: 0; background: var(--brand-purple-soft); color: var(--brand-purple); font: inherit; font-weight: 600; padding: 0 4px; border-radius: 4px; cursor: pointer; }
+.cb-mref:hover { text-decoration: underline; }
+.cb-atts h5 { margin: 12px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-secondary); }
+.cb-att { margin: 0 0 12px; }
+.cb-att figcaption { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.cb-att .table-wrap { max-height: 300px; overflow: auto; }
+.cb-chart { height: 230px; }
+.cb-trace { margin-top: 8px; font-size: 12px; }
+.cb-trace summary { cursor: pointer; color: var(--text-secondary); }
+.cb-trace ol { margin: 6px 0 0; padding-left: 20px; }
+.cb-in { color: var(--text-secondary); word-break: break-all; }
+.cb-err { color: var(--st-critical); }
+.cb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.cb-chip { border: 1px solid var(--brand-purple); color: var(--brand-purple); background: var(--surface-hi); border-radius: 999px; padding: 4px 10px; font: inherit; font-size: 12px; cursor: pointer; }
+.cb-chip:hover { background: var(--brand-purple-soft); }
+.cb-pending { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); }
+.cb-dots { display: inline-flex; gap: 3px; }
+.cb-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-purple); animation: cb-b 1.2s infinite ease-in-out; }
+.cb-dots i:nth-child(2) { animation-delay: .15s; } .cb-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes cb-b { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .cb-dots i { animation: none; } }
+.cb-composer { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--dr-border); }
+.cb-composer textarea { flex: 1; font: inherit; resize: vertical; border-radius: 8px; border: 1px solid var(--dr-border); padding: 8px 10px; background: var(--surface-hi); color: var(--text-primary); }
+@media (max-width: 900px) { .cb-layout { grid-template-columns: 1fr; } .cb-side { max-height: 200px; } }
