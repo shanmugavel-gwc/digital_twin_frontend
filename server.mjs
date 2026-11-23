@@ -2,7 +2,8 @@
 //  - serves the built app from ./dist (run `npm run build` first)
 //  - proxies /api/* to the backend and adds X-API-Key SERVER SIDE, exactly like the Vite dev proxy, so the key never
 //    reaches the browser (CLAUDE.md: secrets never in the frontend). Streams responses, so Server-Sent Events work.
-// Environment: PORT (Render sets it), API_TARGET (backend base URL, default https://digital-twin-backend-8tsc.onrender.com), API_KEY.
+// Environment: PORT (Render sets it), API_TARGET (backend base URL, default https://digital-twin-backend-8tsc.onrender.com), API_KEY,
+//              FRAME_ANCESTORS (origins allowed to embed the app in an iframe; default 'self').
 import http from "node:http";
 import https from "node:https";
 import fs from "node:fs";
@@ -28,7 +29,26 @@ const TYPES = {
   ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
   ".webp": "image/webp", ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2", ".map": "application/json",
 };
-const SECURITY = { "X-Content-Type-Options": "nosniff", "Referrer-Policy": "same-origin", "X-Frame-Options": "SAMEORIGIN" };
+// Who may embed the app in an <iframe>: CSP frame-ancestors (X-Frame-Options is not sent: it cannot list another origin).
+// FRAME_ANCESTORS = space/comma separated origins, e.g. "https://portal.example.com https://*.example.com".
+// Allowed tokens: 'self', 'none', https://host[:port] (wildcard sub-domain ok), http://localhost[:port] / http://127.0.0.1[:port].
+// Unset -> 'self' (only this app's own origin may frame it).
+function frameAncestors(raw) {
+  const ok = /^(?:'self'|'none'|https:\/\/(?:\*\.)?[a-z0-9.-]+(?::\d+)?|http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?)$/i;
+  const tokens = String(raw || "").split(/[\s,]+/).filter(Boolean)
+    .map((t) => (t === "self" || t === "none" ? `'${t}'` : t.replace(/\/+$/, "")));
+  const good = tokens.filter((t) => ok.test(t));
+  const bad = tokens.filter((t) => !ok.test(t));
+  if (bad.length) console.warn(`WARNING: FRAME_ANCESTORS ignored invalid entries: ${bad.join(" ")}`);
+  if (good.includes("'none'")) return "'none'";
+  return good.length ? good.join(" ") : "'self'";
+}
+const FRAME_ANCESTORS = frameAncestors(process.env.FRAME_ANCESTORS);
+const SECURITY = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "same-origin",
+  "Content-Security-Policy": `frame-ancestors ${FRAME_ANCESTORS}`,
+};
 // hop-by-hop headers are not forwarded; the browser's own key header (if any) is replaced by the server's
 const DROP = new Set(["host", "connection", "keep-alive", "transfer-encoding", "upgrade", "proxy-connection", "x-api-key"]);
 
@@ -75,4 +95,4 @@ http.createServer((req, res) => {
   if (req.url.startsWith("/api/") || req.url === "/api") return proxy(req, res);
   if (req.method !== "GET" && req.method !== "HEAD") { res.writeHead(405); res.end(); return; }
   return serveStatic(req, res);
-}).listen(PORT, () => console.log(`UI on :${PORT}, proxying /api to ${TARGET.origin}${TARGET.pathname === "/" ? "" : TARGET.pathname} (API key ${API_KEY ? "set" : "NOT set"})`));
+}).listen(PORT, () => console.log(`UI on :${PORT}, proxying /api to ${TARGET.origin}${TARGET.pathname === "/" ? "" : TARGET.pathname} (API key ${API_KEY ? "set" : "NOT set"}; frame-ancestors ${FRAME_ANCESTORS})`));

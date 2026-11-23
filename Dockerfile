@@ -6,6 +6,7 @@
 # Run (keys from the Docker environment, never baked into the image):
 #   docker run --rm -p 4173:4173 -e API_KEY=<same as backend> digital-twin-ui
 #   docker run --rm -p 4173:4173 -e API_KEY -e API_TARGET=http://host.docker.internal:8000 digital-twin-ui   (local backend)
+#   -e FRAME_ANCESTORS="https://portal.example.com"   lets that site embed the app in an iframe (default: own origin only)
 
 # ---------------------------------------------------------------- 1. build the static app
 FROM node:22-slim AS build

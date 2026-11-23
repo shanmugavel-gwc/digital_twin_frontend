@@ -19,3 +19,5 @@ services:
         value: https://digital-twin-backend-8tsc.onrender.com
       - key: API_KEY                  # SAME value as the backend's API_KEY (kept on the server, never sent to the browser)
         sync: false
+      - key: FRAME_ANCESTORS          # origin(s) allowed to embed the app in an iframe, e.g. https://portal.example.com
+        sync: false                   # (space-separated; unset = only this app's own origin)
