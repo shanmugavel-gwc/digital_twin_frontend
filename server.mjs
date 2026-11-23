@@ -31,16 +31,20 @@ const TYPES = {
 };
 // Who may embed the app in an <iframe>: CSP frame-ancestors (X-Frame-Options is not sent: it cannot list another origin).
 // FRAME_ANCESTORS = space/comma separated origins, e.g. "https://portal.example.com https://*.example.com".
-// Allowed tokens: 'self', 'none', https://host[:port] (wildcard sub-domain ok), http://localhost[:port] / http://127.0.0.1[:port].
+// Allowed tokens: * (any website), 'self', 'none', https://host[:port] (wildcard sub-domain ok), http://localhost[:port] / http://127.0.0.1[:port].
 // Unset -> 'self' (only this app's own origin may frame it).
 function frameAncestors(raw) {
-  const ok = /^(?:'self'|'none'|https:\/\/(?:\*\.)?[a-z0-9.-]+(?::\d+)?|http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?)$/i;
+  const ok = /^(?:\*|'self'|'none'|https:\/\/(?:\*\.)?[a-z0-9.-]+(?::\d+)?|http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?)$/i;
   const tokens = String(raw || "").split(/[\s,]+/).filter(Boolean)
     .map((t) => (t === "self" || t === "none" ? `'${t}'` : t.replace(/\/+$/, "")));
   const good = tokens.filter((t) => ok.test(t));
   const bad = tokens.filter((t) => !ok.test(t));
   if (bad.length) console.warn(`WARNING: FRAME_ANCESTORS ignored invalid entries: ${bad.join(" ")}`);
   if (good.includes("'none'")) return "'none'";
+  if (good.includes("*")) {
+    console.warn("WARNING: FRAME_ANCESTORS=* - ANY website may embed this app in an iframe (clickjacking risk).");
+    return "*";
+  }
   return good.length ? good.join(" ") : "'self'";
 }
 const FRAME_ANCESTORS = frameAncestors(process.env.FRAME_ANCESTORS);
