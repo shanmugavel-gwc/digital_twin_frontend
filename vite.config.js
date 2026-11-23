@@ -19,7 +19,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: process.env.API_TARGET || "http://localhost:8000",
+        // hosted backend on Render by default; for a local backend: API_TARGET=http://localhost:8000 npm run dev
+        target: process.env.API_TARGET || "https://digital-twin-backend-8tsc.onrender.com",
         changeOrigin: true,
         headers: apiKey() ? { "X-API-Key": apiKey() } : {},
       },

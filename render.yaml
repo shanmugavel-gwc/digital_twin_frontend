@@ -1,0 +1,21 @@
+# Render Blueprint for the UI repository (repo root = this ui folder).
+# A Node web service (not a static site): server.mjs serves the built app and proxies /api to the backend, adding X-API-Key
+# server side, so the key never reaches the browser.
+services:
+  - type: web
+    name: digital-twin-ui
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: node server.mjs
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD   # Playwright is only for local UI checks
+        value: "1"
+      - key: API_TARGET               # the backend's public URL (Render service digital-twin-backend)
+        value: https://digital-twin-backend-8tsc.onrender.com
+      - key: API_KEY                  # SAME value as the backend's API_KEY (kept on the server, never sent to the browser)
+        sync: false

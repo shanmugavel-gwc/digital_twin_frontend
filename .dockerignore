@@ -1,0 +1,17 @@
+# Build context = the ui folder. Keep it small and keep secrets out.
+node_modules/
+dist/
+e2e/
+screenshots/
+*.log
+.env
+.env.*
+*.env.local
+.git/
+.github/
+.vscode/
+.idea/
+Dockerfile
+.dockerignore
+render.yaml
+README.md
